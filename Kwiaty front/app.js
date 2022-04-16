@@ -3,7 +3,9 @@
 
 function get(){
     var idd=document.getElementById("flower_id").value;
-    fetch('http://localhost:8080/api/product/'+idd)
+    fetch('http://localhost:8080/api/product/'+idd,{method:'GET',headers:{
+            'Accept-Language': 'en',
+        }})
     .then(res => res.json())
     .then(data=>{console.log(data);displayFlower(data)})
 }
@@ -28,6 +30,22 @@ body: JSON.stringify({
 }
 
 
+function displayFlowers(data) {
+    const name = data.name
+    const desc=data.description
+    const rc=data.price
+    const flowerDiv = document.getElementById("flower");
+    const heading = document.createElement("h2");
+    heading.innerHTML = name
+    flowerDiv.appendChild(heading);
+    const descr = document.createElement("p");
+    descr.innerHTML = desc;
+    flowerDiv.appendChild(descr);
+    const prc = document.createElement("p");
+    prc.innerHTML = rc;
+    flowerDiv.appendChild(prc);
+  }
+
 function displayFlower(data) {
     if(document.getElementById("flower").innerHTML!==""){
         document.getElementById("flower").innerHTML=""
@@ -45,4 +63,12 @@ function displayFlower(data) {
     const prc = document.createElement("p");
     prc.innerHTML = rc;
     flowerDiv.appendChild(prc);
-  }  
+}
+
+function Flowers(){
+    fetch('http://localhost:8080/api/product/all',{method:'GET',headers:{
+            'Accept-Language': 'en',
+        }})
+        .then(res => res.json())
+        .then(data=>{console.log(data);for(let i=0; i<data.length;i++){displayFlowers(data[i])}})
+}
