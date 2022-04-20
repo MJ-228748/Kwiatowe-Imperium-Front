@@ -1,22 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FLOWER</title>
-    <link rel="stylesheet" href="main.css">
-  </head>
-  <body class="theme">
-    <h1>Kwiatowe Imperium</h1>
-    <nav>
-      <a href="GetFlowerID.html">Find Flower by ID</a><br><br>
-      <a href="./PostFlower.html">Add new flower</a><br><br>
-      <a href="./All_Flowers.html">All Flowers</a>
-       <!-- <a href="./contact.html">Contact</a> -->
-    </nav>
-    <script src="app.js"></script>
-    <noscript>You need to enable JavaScript to view the full site.</noscript>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FLOWER</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body class="theme" id="1" onload="create_lang()">
+<h1>Kwiatowe Imperium</h1>
+<div id="main" class="page" style="">
+  <p class="link" onclick="show('FindID')">Find Flower by ID</p>
+  <p class="link" onclick="show('AddF')">Add new flower</p>
+  <p class="link" onclick="show('All_flowers');Flowers()">All Flowers</p>
+</div>
+<div id="FindID" class="page" style="display:none">
+  <h2>Enter flower id</h2>
+  <input type="number" name="id" id="flower_id">
+  <div>
+    <button id="b1" onclick=get()>Get Flower</button>
+  </div>
+  <div id="flower"></div>
+  <p class="link" onclick="show('main')">Back</p>
+</div>
+<div id="AddF" class="page" style="display:none">
+  <p>Enter flower name</p>
+  <input type="text" name="name" id="flower_name">
+  <p>Enter flower description</p>
+  <input type="text" name="desc" id="flower_desc">
+  <p>Enter flower price</p>
+  <input type="number" name="price" id="flower_price">
+  <div>
+    <button id="b2" onclick=put()>Put Flower</button>
+  </div>
+  <div id="flower2"></div>
+  <p class="link" onclick="show('main')">Back</p>
+</div>
+<div id="All_flowers" class="page" style="display:none">
+  <h2>All flowers</h2>
+  <div id="flower3"></div>
+  <p class="link" onclick="show('main')">Back</p>
+</div>
+<script src="app.js">
+</script>
+<noscript>You need to enable JavaScript to view the full site.</noscript>
 
-  </body>
+</body>
 </html>

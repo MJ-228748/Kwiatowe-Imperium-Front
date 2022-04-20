@@ -1,17 +1,30 @@
+.link {
+    text-decoration:underline;
+    color:blue;
+    cursor:pointer;
+}
+
 :root {
     --green: #00FF00;
     --white: #ffffff;
     --black: #000000;
     --pink: #cc3bc5;
-  }
-  * {
+}
+* {
     color: var(--fontColor);
     font-family: helvetica;
-  }
-  body {
-      background: var(--bg);
-  }
-  .theme {
+}
+body {
+    background: var(--bg);
+}
+.theme {
     --bg: var(--white);
     --fontColor: var(--black);
-  }
+}
+.language {
+    position: absolute;
+    height: 30px;
+    width: 75px;
+    top: 20px;
+    right: 20px;
+}
