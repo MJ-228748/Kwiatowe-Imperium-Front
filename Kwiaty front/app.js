@@ -51,7 +51,7 @@ function put(){
     fetch('http://localhost:8080/api/product',{method:'POST',
         headers:{
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGdtYWlsLmNvbSIsImV4cCI6MTY1MDgyNTc4NywiaWF0IjoxNjQ5OTYxNzg3fQ.miH4qHV9eBAxOnSFBEmj0kBvWcb3aFL0u648XIu1Vms'
+            'Authorization': 'Login to do, for now just paste your own'
         },
         body: JSON.stringify({
             descriptionEn: desc,
