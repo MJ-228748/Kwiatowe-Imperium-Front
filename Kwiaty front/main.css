@@ -1,7 +1,26 @@
+.link2 {
+    text-decoration:underline;
+    color:blue;
+    cursor:pointer;
+    position: absolute;
+    height: 30px;
+    width: 75px;
+    top: 10px;
+    right: 120px;
+}
+
 .link {
     text-decoration:underline;
     color:blue;
     cursor:pointer;
+}
+
+.error{
+    text-decoration: wavy;
+    color: red;
+}
+.success{
+    color:#00FF00;
 }
 
 :root {
@@ -12,7 +31,7 @@
 }
 * {
     color: var(--fontColor);
-    font-family: helvetica;
+    font-family: helvetica, serif;
 }
 body {
     background: var(--bg);
@@ -21,10 +40,35 @@ body {
     --bg: var(--white);
     --fontColor: var(--black);
 }
+.logout{
+    position: absolute;
+    height: 30px;
+    width: 175px;
+    top: 10px;
+    right: 200px;
+}
 .language {
     position: absolute;
     height: 30px;
     width: 75px;
     top: 20px;
     right: 20px;
+}
+p{
+    display: inline-block;
+}
+.register {
+    position: absolute;
+    height: 30px;
+    width: 75px;
+    top: 20px;
+    right: 100px;
+}
+
+.login {
+    position: absolute;
+    height: 30px;
+    width: 75px;
+    top: 20px;
+    right: 180px;
 }
