@@ -7,20 +7,22 @@
   <title>FLOWER</title>
   <link rel="stylesheet" href="main.css">
 </head>
-<body class="theme" id="1">
-<button id="l" onclick=swap_lang() class="language">en</button>
-<div id="auth" style="">
-<button id="r" onclick="show('register')" class="register">Sign Up</button>
-<button id="log" onclick="show('login')" class="login">Sign in</button>
-</div>
-<div id="auth2" style="display: none">
-  <p class="logout">Logged in, click here to</p><p class="link2" onclick="logout()"> log out</p>
-</div>
-<h1>Kwiatowe Imperium</h1>
+<header>
+  <button id="l" onclick=swap_lang();FlowersMain() class="language">en</button>
+  <div id="auth" style="">
+    <button id="r" onclick="show('register')" class="register">Sign Up</button>
+    <button id="log" onclick="show('login')" class="login">Sign in</button>
+  </div>
+  <div id="auth2" style="display: none">
+    <p class="logout">Logged in, click here to</p><p class="link2" onclick="logout()"> log out</p>
+  </div>
+  <h1>Kwiatowe Imperium</h1>
+</header>
+<body class="theme" id="1" onload="FlowersMain();">
 <div id="main" class="page" style="">
   <p class="link" onclick="show('FindID')">Find Flower by ID</p><br>
   <p class="link" onclick="show('AddF')">Add new flower</p><br>
-  <p class="link" onclick="show('All_flowers');Flowers()">All Flowers</p><br>
+  <p class="link" onclick="show('All_flowers')">All Flowers</p><br>
 </div>
 <div id="FindID" class="page" style="display:none">
   <h2>Enter flower id</h2>
@@ -33,18 +35,18 @@
 </div>
 <div id="AddF" class="page" style="display:none">
   <p>Enter flower name</p><br>
-  <input type="text" name="name" id="flower_name">
+  <input type="text" name="name" id="flower_name"><br>
   <p>Enter flower description</p><br>
-  <input type="text" name="desc" id="flower_desc">
+  <input type="text" name="desc" id="flower_desc"><br>
   <p>Enter flower price</p><br>
-  <input type="number" name="price" id="flower_price">
+  <input type="number" name="price" id="flower_price"><br>
   <div>
     <button id="b2" onclick=put()>Put Flower</button>
   </div>
   <div id="flower2"></div>
   <p class="link" onclick="show('main')">Back</p>
 </div>
-<div id="All_flowers" class="page" style="display:none">
+<div id="All_flowers" class="page" style="display:none" onload="Flowers()">
   <h2>All flowers</h2>
   <div id="flower3"></div>
   <p class="link" onclick="show('main')">Back</p>
@@ -73,7 +75,11 @@
   <button id="log2" onclick=login()>login</button><br>
   <p class="link" onclick="show('main')">Back</p>
 </div>
+<div id="flowerbed" class="page"></div>
 <script src="app.js"> </script>
 <noscript>You need to enable JavaScript to view the full site.</noscript>
 </body>
+<footer>
+  <h2>Projekt na BNABD - Kwiatowe imperium</h2>
+</footer>
 </html>

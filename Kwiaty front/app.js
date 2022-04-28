@@ -11,6 +11,9 @@ function show(elementID) {
         pages[i].style.display = 'none';
     }
     ele.style.display = 'block';
+    if(elementID==="main"){
+       document.getElementById("flowerbed").style.display='block'
+    }
 }
 
 
@@ -138,7 +141,64 @@ function Flowers(){
             'Accept-Language': localStorage.getItem('lang'),
         }})
         .then(res => res.json())
-        .then(data=>{console.log(data);for(let i=0; i<data.length;i++){displayFlowers(data[i])}})
+        .then(data=>{console.log(data.data);for(let i=0; i<data.data.length;i++){displayFlowers(data.data[i])}})
+}
+
+function FlowersMain(){
+    const flowerDiv = document.getElementById("flowerbed");
+    flowerDiv.innerHTML=""
+    fetch('http://localhost:8080/api/product/all',{method:'GET',headers:{
+            'Accept-Language': localStorage.getItem('lang'),
+        }})
+        .then(res => res.json())
+        .then(data=>{console.log(data.data);for(let i=0; i<data.data.length;i++){displayFlowersMain(data.data[i],i)}})
+}
+
+function displayFlowersMain(data,id) {
+    let name,desc,rc,imag;
+    if(data.name===null) {
+        if(localStorage.getItem('lang')==="en") name = "No name set"
+        else name = "Brak nazwy"
+    }
+    else  name = data.name
+    if(data.description===null) {
+        if(localStorage.getItem('lang')==="en")  desc = "No description set"
+        else desc = "Brak opisu"
+    }
+    else desc=data.description
+    if(data.price===null) {
+        if(localStorage.getItem('lang')==="en") rc = "No price set"
+        else rc="Brak ceny"
+    }
+    else rc=data.price
+    if(data.images.length===0) imag="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F002%2F261%2F129%2Foriginal%2Fno-sign-empty-red-crossed-out-circle-not-allowed-sign-isolate-on-white-background-illustration-eps-10-free-vector.jpg&f=1&nofb=1"
+    const flowerDiv = document.getElementById("flowerbed");
+
+    const flower = document.createElement("div");
+    flower.className="flowerbed"
+    flower.id="F"+id
+
+    const imagd=document.createElement("img");
+    const named=document.createElement("h3");
+    const descd=document.createElement("p");
+    const priced=document.createElement("p");
+
+    imagd.src=imag;
+    imagd.className="FlowerImg"
+    named.innerHTML=name;
+    descd.innerHTML=desc;
+    if(localStorage.getItem('lang')==="en") priced.innerHTML=rc+" PLN";
+    else priced.innerHTML=rc+" ZL";
+
+
+    flower.appendChild(named);
+    flower.appendChild(imagd);
+    flower.appendChild(descd);
+    flower.appendChild(document.createElement("br"))
+    flower.appendChild(priced);
+    flowerDiv.appendChild(flower);
+
+
 }
 
 function register(){

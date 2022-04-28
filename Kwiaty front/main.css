@@ -1,7 +1,7 @@
 .link2 {
-    text-decoration:underline;
-    color:blue;
-    cursor:pointer;
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
     position: absolute;
     height: 30px;
     width: 75px;
@@ -10,17 +10,18 @@
 }
 
 .link {
-    text-decoration:underline;
-    color:blue;
-    cursor:pointer;
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
 }
 
-.error{
+.error {
     text-decoration: wavy;
     color: red;
 }
-.success{
-    color:#00FF00;
+
+.success {
+    color: #00FF00;
 }
 
 :root {
@@ -29,46 +30,102 @@
     --black: #000000;
     --pink: #cc3bc5;
 }
+
 * {
     color: var(--fontColor);
     font-family: helvetica, serif;
 }
+
 body {
     background: var(--bg);
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
+
 .theme {
     --bg: var(--white);
     --fontColor: var(--black);
 }
-.logout{
+
+header {
+    background: aqua;
+    width: 100%;
+    height: 50px;
+    vertical-align: middle;
+    text-align: center;
+    position: fixed;
+    top:0;
+
+    padding-top: 7px;
+    padding-bottom: 7px;
+
+    overflow: hidden;
+
+}
+
+footer {
+    background: aqua;
+
+    position: fixed;
+    bottom: 0;
+    z-index: 9;
+
+    width: 100%;
+    height: 50px;
+
+    text-align: center;
+
+    overflow: hidden;
+
+}
+
+.logout {
     position: absolute;
-    height: 30px;
+    height: 36px;
     width: 175px;
-    top: 10px;
     right: 200px;
 }
+
 .language {
     position: absolute;
-    height: 30px;
+    height: 36px;
     width: 75px;
-    top: 20px;
     right: 20px;
 }
-p{
+
+p {
     display: inline-block;
 }
+
 .register {
     position: absolute;
-    height: 30px;
+    height: 36px;
     width: 75px;
-    top: 20px;
     right: 100px;
 }
 
 .login {
     position: absolute;
-    height: 30px;
+    height: 36px;
     width: 75px;
-    top: 20px;
     right: 180px;
+}
+
+html{
+    position: relative;
+    min-height: 100%;
+}
+.flowerbed{
+    width: 240px;
+    height: 360px;
+    float: left;
+    border: 3px solid black;
+    padding: 4px 4px 4px 4px;
+    margin: 5px 5px 5px 5px;
+}
+
+.FlowerImg{
+    width: 232px;
+    height: 176px;
+    border: 2px solid black;
 }
