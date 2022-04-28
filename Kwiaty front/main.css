@@ -37,10 +37,14 @@
 }
 
 body {
+    margin-left: 0;
+    margin-right: 0;
     background: var(--bg);
     padding-top: 50px;
     padding-bottom: 50px;
+    background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2Fwp5224588.jpg&f=1&nofb=1");
 }
+
 
 .theme {
     --bg: var(--white);
@@ -48,7 +52,8 @@ body {
 }
 
 header {
-    background: aqua;
+    background-image: url("https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fclipart-library.com%2Fimg1%2F1562986.png&f=1&nofb=1");
+    background-size: contain;
     width: 100%;
     height: 50px;
     vertical-align: middle;
@@ -64,12 +69,12 @@ header {
 }
 
 footer {
-    background: aqua;
-
+    background-image: url("https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fclipart-library.com%2Fimg1%2F1562986.png&f=1&nofb=1");
+    background-size: contain;
+    transform: rotate(180deg);
     position: fixed;
     bottom: 0;
     z-index: 9;
-
     width: 100%;
     height: 50px;
 
@@ -115,17 +120,42 @@ html{
     position: relative;
     min-height: 100%;
 }
-.flowerbed{
+.flowerbed {
     width: 240px;
     height: 360px;
+
     float: left;
+
     border: 3px solid black;
     padding: 4px 4px 4px 4px;
     margin: 5px 5px 5px 5px;
+
+    background:lightgray;
+    opacity: 45%;
 }
 
 .FlowerImg{
     width: 232px;
     height: 176px;
     border: 2px solid black;
+}
+
+.menu_button{
+    width:40px;
+    height: 40px;
+
+    padding-left: 10px;
+    float: left;
+
+    cursor: pointer;
+}
+.menu{
+    background: lightgray;
+    z-index: 50;
+    position: fixed;
+    left: 10px;
+    top: 45px;
+    width:300px;
+    height: 300px;
+    border: 3px solid black;
 }

@@ -28,7 +28,6 @@ function swap_lang(){
         localStorage.setItem('lang','en')
         document.getElementById("l").textContent="en"
     }
-    Flowers()
 }
 
 function get(){
@@ -60,37 +59,6 @@ function put(){
 }
 
 
-function displayFlowers(data) {
-    let name,desc,rc
-    if(data.name===null) {
-        if(localStorage.getItem('lang')==="en") name = "No name set"
-        else name = "Brak nazwy"
-    }
-    else  name = data.name
-    if(data.description===null) {
-        if(localStorage.getItem('lang')==="en")  desc = "No description set"
-        else desc = "Brak opisu"
-    }
-    else desc=data.description
-    if(data.price===null) {
-        if(localStorage.getItem('lang')==="en") rc = "No price set"
-        else rc="Brak ceny"
-    }
-    else rc=data.price
-    const flowerDiv = document.getElementById("flower3");
-    const heading = document.createElement("h3");
-    heading.innerHTML = name
-    flowerDiv.appendChild(heading);
-    const descr = document.createElement("p");
-    descr.innerHTML = desc;
-    flowerDiv.appendChild(descr);
-    flowerDiv.appendChild(document.createElement("br"))
-    const prc = document.createElement("p");
-    prc.innerHTML = rc;
-    flowerDiv.appendChild(prc);
-    flowerDiv.appendChild(document.createElement("br"))
-    flowerDiv.appendChild(document.createElement("br"))
-}
 
 function displayFlower(data,id) {
     if(document.getElementById(id).innerHTML!==""){
@@ -134,16 +102,6 @@ function displayFlower(data,id) {
     flowerDiv.appendChild(document.createElement("br"))
 }
 
-function Flowers(){
-    const flowerDiv = document.getElementById("flower3");
-    flowerDiv.innerHTML=""
-    fetch('http://localhost:8080/api/product/all',{method:'GET',headers:{
-            'Accept-Language': localStorage.getItem('lang'),
-        }})
-        .then(res => res.json())
-        .then(data=>{console.log(data.data);for(let i=0; i<data.data.length;i++){displayFlowers(data.data[i])}})
-}
-
 function FlowersMain(){
     const flowerDiv = document.getElementById("flowerbed");
     flowerDiv.innerHTML=""
@@ -175,9 +133,11 @@ function displayFlowersMain(data,id) {
     const flowerDiv = document.getElementById("flowerbed");
 
     const flower = document.createElement("div");
+
     flower.className="flowerbed"
     flower.id="F"+id
-
+    flower.onmouseover=function (){this.style.opacity="100%"}
+    flower.onmouseout=function (){this.style.opacity="45%"}
     const imagd=document.createElement("img");
     const named=document.createElement("h3");
     const descd=document.createElement("p");
@@ -259,4 +219,12 @@ function logout(){
     document.getElementById('auth').style.display = 'block'
     document.getElementById('auth2').style.display = 'none'
     setTimeout(show, 3000,'main')
+}
+
+function show_menu(){
+  const menu=document.getElementById("main");
+  console.log(menu.style.display)
+  if(menu.style.display==='block')   menu.style.display='none';
+  else if(menu.style.display==='none')   menu.style.display='block';
+
 }

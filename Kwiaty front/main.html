@@ -7,7 +7,8 @@
   <title>FLOWER</title>
   <link rel="stylesheet" href="main.css">
 </head>
-<header>
+<header id="header">
+  <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.uwR4Qb-1cRgTN8aXQ6Ui6QHaHa%26pid%3DApi&f=1" class="menu_button" onclick='show_menu()'>
   <button id="l" onclick=swap_lang();FlowersMain() class="language">en</button>
   <div id="auth" style="">
     <button id="r" onclick="show('register')" class="register">Sign Up</button>
@@ -19,10 +20,10 @@
   <h1>Kwiatowe Imperium</h1>
 </header>
 <body class="theme" id="1" onload="FlowersMain();">
-<div id="main" class="page" style="">
+
+<div id="main" class="menu" style="display: none">
   <p class="link" onclick="show('FindID')">Find Flower by ID</p><br>
   <p class="link" onclick="show('AddF')">Add new flower</p><br>
-  <p class="link" onclick="show('All_flowers')">All Flowers</p><br>
 </div>
 <div id="FindID" class="page" style="display:none">
   <h2>Enter flower id</h2>
@@ -44,11 +45,6 @@
     <button id="b2" onclick=put()>Put Flower</button>
   </div>
   <div id="flower2"></div>
-  <p class="link" onclick="show('main')">Back</p>
-</div>
-<div id="All_flowers" class="page" style="display:none" onload="Flowers()">
-  <h2>All flowers</h2>
-  <div id="flower3"></div>
   <p class="link" onclick="show('main')">Back</p>
 </div>
 <div id="register" class="page" style="display:none">
@@ -80,6 +76,6 @@
 <noscript>You need to enable JavaScript to view the full site.</noscript>
 </body>
 <footer>
-  <h2>Projekt na BNABD - Kwiatowe imperium</h2>
+  <h2 style="transform: rotate(180deg);">Projekt na BNABD - Kwiatowe imperium</h2>
 </footer>
 </html>
