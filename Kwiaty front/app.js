@@ -18,6 +18,7 @@ function show(elementID) {
 
 localStorage.setItem('lang', 'en')
 localStorage.setItem('auth', '')
+var page_id = 0
 
 function swap_lang() {
     if (localStorage.getItem('lang') === "en") {
@@ -38,8 +39,10 @@ function get() {
             }
         })
         .then(res => res.json())
-        .then(data => { console.log(data);
-            displayFlower(data, "flower") })
+        .then(data => {
+            console.log(data);
+            displayFlower(data, "flower")
+        })
 }
 
 function put() {
@@ -103,10 +106,27 @@ function displayFlower(data, id) {
     flowerDiv.appendChild(document.createElement("br"))
 }
 
+function swap_page(id) {
+    page_id = id
+    const flowerDiv = document.getElementById("flowerbed");
+    flowerDiv.innerHTML = ""
+    FlowersMain()
+}
+
+function add_page_button(id) {
+    const flowerDiv = document.getElementById("flowerbed");
+    const page = document.createElement("button");
+    page.id = "page_" + id
+    page.className = "Page_button"
+    page.innerHTML = "Page " + (id + 1)
+    page.onclick = swap_page(id)
+    flowerDiv.appendChild(page);
+}
+
 function FlowersMain() {
     const flowerDiv = document.getElementById("flowerbed");
     flowerDiv.innerHTML = ""
-    fetch('http://localhost:8080/api/product/all', {
+    fetch('http://localhost:8080/api/product/all/?page=' + page_id, {
             method: 'GET',
             headers: {
                 'Accept-Language': localStorage.getItem('lang'),
@@ -114,6 +134,7 @@ function FlowersMain() {
         })
         .then(res => res.json())
         .then(data => { console.log(data.data); for (let i = 0; i < data.data.length; i++) { displayFlowersMain(data.data[i], i) } })
+        .then(data => { for (let i = 0; i < data.data.length / 10 + 1; i++) { add_page_button(i) } })
 }
 
 function displayFlowersMain(data, id) {
