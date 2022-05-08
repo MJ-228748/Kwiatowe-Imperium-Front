@@ -17,13 +17,13 @@ function show(elementID) {
 
 
 localStorage.setItem('lang', 'en')
-localStorage.setItem('auth', '')
+localStorage.setItem('token', '')
 var page_id = 0
 
 function swap_lang() {
     if (localStorage.getItem('lang') === "en") {
-        localStorage.setItem('lang', 'pl')
-        document.getElementById("l").textContent = "pl"
+        localStorage.setItem('lang', 'PL')
+        document.getElementById("l").textContent = "PL"
     } else {
         localStorage.setItem('lang', 'en')
         document.getElementById("l").textContent = "en"
@@ -53,7 +53,7 @@ function put() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': localStorage.getItem('auth')
+                'Authorization': 'Bearer '+localStorage.getItem('token')
             },
             body: JSON.stringify({
                 descriptionEn: desc,
@@ -119,7 +119,7 @@ function add_page_button(id) {
     page.id = "page_" + id
     page.className = "Page_button"
     page.innerHTML = "Page " + (id + 1)
-    page.onclick = swap_page(id)
+    page.addEventListener('click',function(){swap_page(id)})
     flowerDiv.appendChild(page);
 }
 
@@ -133,8 +133,8 @@ function FlowersMain() {
             }
         })
         .then(res => res.json())
-        .then(data => { console.log(data.data); for (let i = 0; i < data.data.length; i++) { displayFlowersMain(data.data[i], i) } })
-        .then(data => { for (let i = 0; i < data.data.length / 10 + 1; i++) { add_page_button(i) } })
+        .then(data => {console.log(data); for (let i = 0; i < data.data.length; i++) { displayFlowersMain(data.data[i], i) }for (let i = 0; i < ((data.count) / 10 ); i++) { add_page_button(i) }  })
+        .then(data => {})
 }
 
 function displayFlowersMain(data, id) {
@@ -216,7 +216,7 @@ function register() {
     setTimeout(show, 3000, 'main')
 }
 
-function login() {
+function login1() {
     document.getElementById("Log_res").innerHTML = ""
     var mail = document.getElementById("lemail").value;
     var pass = document.getElementById("lpass").value;
@@ -231,16 +231,38 @@ function login() {
             })
         })
         .then(res => { return res.json() })
-        .then(data => localStorage.setItem('auth', data.jwt))
+        .then(data => login2(data.jwt))
+
+}
+function login2(auth) {
+    if(auth===undefined){
+        document.getElementById("Log_res").className = "error"
+        document.getElementById("Log_res").innerHTML = "Incorrect email or password!"
+        return
+    }
+    localStorage.setItem('token',auth)
+    fetch('http://localhost:8080/auth/me', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+localStorage.getItem('token')
+        }
+    })
+        .then(res => { return res.json() })
+        .then(data => login3(data))
+
+}
+function login3(user){
     document.getElementById("Log_res").className = "success"
     document.getElementById("Log_res").innerHTML = "Logged in"
     document.getElementById('auth').style.display = 'none'
+    document.getElementById('Greeting').innerHTML="Hello "+user.name + ' '+ user.surname+'!'
     document.getElementById('auth2').style.display = 'block'
     setTimeout(show, 3000, 'main')
 }
 
 function logout() {
-    localStorage.setItem('auth', '')
+    localStorage.setItem('token', '')
     document.getElementById('auth').style.display = 'block'
     document.getElementById('auth2').style.display = 'none'
     setTimeout(show, 3000, 'main')
@@ -248,7 +270,6 @@ function logout() {
 
 function show_menu() {
     const menu = document.getElementById("main");
-    console.log(menu.style.display)
     if (menu.style.display === 'block') menu.style.display = 'none';
     else if (menu.style.display === 'none') menu.style.display = 'block';
 

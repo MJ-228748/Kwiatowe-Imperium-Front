@@ -153,5 +153,5 @@ html {
 .Page_button {
     height: 36px;
     width: 75px;
-    float: left;
+    alignment: center;
 }
