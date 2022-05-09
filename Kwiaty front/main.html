@@ -9,6 +9,12 @@
 </head>
 <header id="header">
   <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.uwR4Qb-1cRgTN8aXQ6Ui6QHaHa%26pid%3DApi&f=1" class="menu_button" onclick='show_menu()'>
+  <select name="sort" id="sorting" onchange="FlowersMain()">
+    <option value="id">Default order</option>
+    <option value="price">Price</option>
+    <option value="nameEn">Name</option>
+    <option value="categories">Category</option>
+  </select>
   <button id="l" onclick=swap_lang();FlowersMain() class="language">en</button>
   <div id="auth" style="">
     <button id="r" onclick="show('register')" class="register">Sign Up</button>

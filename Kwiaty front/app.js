@@ -56,8 +56,16 @@ function put() {
                 'Authorization': 'Bearer '+localStorage.getItem('token')
             },
             body: JSON.stringify({
+                categories: [
+                    0
+                ],
                 descriptionEn: desc,
+                descriptionPl: desc,
+                images: [
+                    0
+                ],
                 nameEn: name,
+                namePl: name,
                 price: price
             })
         })
@@ -126,19 +134,19 @@ function add_page_button(id) {
 function FlowersMain() {
     const flowerDiv = document.getElementById("flowerbed");
     flowerDiv.innerHTML = ""
-    fetch('http://localhost:8080/api/product/all/?page=' + page_id, {
+    fetch('http://localhost:8080/api/product/all/?page=' + page_id+'&sort='+document.getElementById("sorting").value, {
             method: 'GET',
             headers: {
                 'Accept-Language': localStorage.getItem('lang'),
             }
         })
         .then(res => res.json())
-        .then(data => {console.log(data); for (let i = 0; i < data.data.length; i++) { displayFlowersMain(data.data[i], i) }for (let i = 0; i < ((data.count) / 10 ); i++) { add_page_button(i) }  })
-        .then(data => {})
+        .then(data => {console.log(data); for (let i = 0; i < data.data.length; i++) { displayFlowersMain(data.data[i], i) }for (let i = 0; i < ((data.count) / 10 ); i++) { add_page_button(i) } })
 }
 
 function displayFlowersMain(data, id) {
     let name, desc, rc, imag;
+    console.log(data)
     if (data.name === null) {
         if (localStorage.getItem('lang') === "en") name = "No name set"
         else name = "Brak nazwy"

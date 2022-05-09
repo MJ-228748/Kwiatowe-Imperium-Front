@@ -42,7 +42,7 @@ body {
     background: var(--bg);
     padding-top: 50px;
     padding-bottom: 50px;
-    background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2Fwp5224588.jpg&f=1&nofb=1");
+    /*background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2Fwp5224588.jpg&f=1&nofb=1");*/
 }
 
 .theme {
@@ -154,4 +154,8 @@ html {
     height: 36px;
     width: 75px;
     alignment: center;
+}
+
+#sorting{
+    float: left;
 }
