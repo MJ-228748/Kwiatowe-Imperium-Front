@@ -23,6 +23,7 @@
   <div id="auth2" style="display: none">
     <p class="logout" id="Greeting"></p><p class="link2" onclick="logout()"> log out</p>
   </div>
+  <button id="cartb" onclick="show('cart');get_cart()" class="cart">Cart</button>
   <h1>Kwiatowe Imperium</h1>
 </header>
 <body class="theme" id="1" onload="FlowersMain();">
@@ -38,7 +39,7 @@
     <button id="b1" onclick=get()>Get Flower</button>
   </div>
   <div id="flower"></div>
-  <p class="link" onclick="show('main')">Back</p>
+  <p class="link" onclick="show('flowerbed')">Back</p>
 </div>
 <div id="AddF" class="page" style="display:none">
   <p>Enter flower name</p><br>
@@ -51,7 +52,7 @@
     <button id="b2" onclick=put()>Put Flower</button>
   </div>
   <div id="flower2"></div>
-  <p class="link" onclick="show('main')">Back</p>
+  <p class="link" onclick="show('flowerbed')">Back</p>
 </div>
 <div id="register" class="page" style="display:none">
   <p>Name</p><br>
@@ -66,7 +67,7 @@
   <input type="password" id="pass2"><br>
   <div id="Reg_res"></div><br>
   <button id="reg" onclick=register()>register</button><br>
-  <p class="link" onclick="show('main')">Back</p>
+  <p class="link" onclick="show('flowerbed')">Back</p>
 </div>
 <div id="login" class="page" style="display:none">
   <p>Email</p><br>
@@ -75,9 +76,10 @@
   <input type="password" id="lpass">
   <div id="Log_res"></div><br>
   <button id="log2" onclick=login1()>login</button><br>
-  <p class="link" onclick="show('main')">Back</p>
+  <p class="link" onclick="show('flowerbed')">Back</p>
 </div>
 <div id="flowerbed" class="page"></div>
+<div id="cart" class="page"></div>
 <script src="app.js"> </script>
 <noscript>You need to enable JavaScript to view the full site.</noscript>
 </body>
