@@ -1,4 +1,12 @@
 function show(elementID) {
+    document.getElementById("Log_res").innerHTML = ""
+    document.getElementById("lemail").value="";
+    document.getElementById("lpass").value="";
+    if (document.getElementById("flower").innerHTML !== "") {
+        document.getElementById("flower").innerHTML = ""
+    }
+    document.getElementById("flower_id").value="";
+    document.getElementById("lpass").value="";
     const ele = document.getElementById(elementID);
     if (!ele) {
         alert("no such element");
@@ -23,7 +31,7 @@ var page_id = 0
 function swap_lang() {
     if (localStorage.getItem('lang') === "en") {
         localStorage.setItem('lang', 'PL')
-        document.getElementById("l").textContent = "PL"
+        document.getElementById("l").textContent = "pl"
     } else {
         localStorage.setItem('lang', 'en')
         document.getElementById("l").textContent = "en"
@@ -41,7 +49,7 @@ function get() {
         .then(res => res.json())
         .then(data => {
             console.log(data);
-            displayFlower(data, "flower")
+            displayFlower(data)
         })
 }
 
@@ -75,9 +83,9 @@ function put() {
 
 
 
-function displayFlower(data, id) {
-    if (document.getElementById(id).innerHTML !== "") {
-        document.getElementById(id).innerHTML = ""
+function displayFlower(data) {
+    if (document.getElementById("flower").innerHTML !== "") {
+        document.getElementById("flower").innerHTML = ""
     }
     if (data === null) {
         const flowerDiv = document.getElementById("flower");
@@ -87,7 +95,8 @@ function displayFlower(data, id) {
         flowerDiv.appendChild(heading);
         return
     }
-    let name, desc, rc
+    let name, desc, rc, imag;
+    console.log(data)
     if (data.name === null) {
         if (localStorage.getItem('lang') === "en") name = "No name set"
         else name = "Brak nazwy"
@@ -100,17 +109,54 @@ function displayFlower(data, id) {
         if (localStorage.getItem('lang') === "en") rc = "No price set"
         else rc = "Brak ceny"
     } else rc = data.price
+    if (data.images.length === 0) imag = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F002%2F261%2F129%2Foriginal%2Fno-sign-empty-red-crossed-out-circle-not-allowed-sign-isolate-on-white-background-illustration-eps-10-free-vector.jpg&f=1&nofb=1"
+    else imag = data.images[0].url
     const flowerDiv = document.getElementById("flower");
-    const heading = document.createElement("h2");
-    heading.innerHTML = name
-    flowerDiv.appendChild(heading);
-    const descr = document.createElement("p");
-    descr.innerHTML = desc;
-    flowerDiv.appendChild(descr);
-    flowerDiv.appendChild(document.createElement("br"))
-    const prc = document.createElement("p");
-    prc.innerHTML = rc;
-    flowerDiv.appendChild(prc);
+
+    const flower = document.createElement("div");
+
+    flower.className = "flowerbed"
+    flower.id = data.id
+    flower.onmouseover = function() { this.style.opacity = "100%" }
+    flower.onmouseout = function() { this.style.opacity = "45%" }
+    const imagd = document.createElement("img");
+    const named = document.createElement("h3");
+    const descd = document.createElement("p");
+    const priced = document.createElement("p");
+    const qnt= document.createElement("input")
+    const add= document.createElement("button")
+
+    imagd.src = imag;
+    imagd.className = "FlowerImg"
+
+    named.innerHTML = name;
+
+    descd.innerHTML = desc;
+
+    if (localStorage.getItem('lang') === "en") priced.innerHTML = rc + " PLN";
+    else priced.innerHTML = rc + " ZL";
+
+    qnt.type="number"
+    qnt.id="FQ"+data.id;
+    qnt.name="quantity"
+    qnt.min=0
+    qnt.defaultValue=0
+    qnt.style="width: 50px"
+
+    add.innerHTML="Add to cart"
+    add.onclick=function(){add_to_cart(data.id)}
+
+
+    flower.appendChild(named);
+    flower.appendChild(imagd);
+    flower.appendChild(descd);
+    flower.appendChild(document.createElement("br"))
+    flower.appendChild(priced);
+    if(localStorage.getItem('token')!=='') {
+        flower.appendChild(qnt);
+        flower.appendChild(add);
+    }
+    flowerDiv.appendChild(flower);
 }
 
 function swap_page(id) {
@@ -122,12 +168,20 @@ function swap_page(id) {
 
 function add_page_button(id) {
     const flowerDiv = document.getElementById("flowerbed");
-    const page = document.createElement("button");
-    page.id = "page_" + id
-    page.className = "Page_button"
-    page.innerHTML = "Page " + (id + 1)
-    page.addEventListener('click',function(){swap_page(id)})
-    flowerDiv.appendChild(page);
+    const pagediv = document.createElement("div")
+    pagediv.id="pagediv"
+
+    for(let i=0;i<=id;i++) {
+        const page = document.createElement("button");
+        page.id = "page_" + i
+        page.className = "Page_button"
+        page.innerHTML = "Page " + (i + 1)
+        page.addEventListener('click', function () {
+            swap_page(i)
+        })
+        pagediv.appendChild(page);
+    }
+    flowerDiv.appendChild(pagediv)
 }
 
 function FlowersMain() {
@@ -140,7 +194,7 @@ function FlowersMain() {
             }
         })
         .then(res => res.json())
-        .then(data => {console.log(data); for (let i = 0; i < data.data.length; i++) { displayFlowersMain(data.data[i]) }for (let i = 0; i < ((data.count) / 10 ); i++) { add_page_button(i) } })
+        .then(data => {console.log(data); for (let i = 0; i < data.data.length; i++) { displayFlowersMain(data.data[i]) }add_page_button(Math.floor(data.count/10)) })
 }
 
 function displayFlowersMain(data) {
@@ -201,8 +255,10 @@ function displayFlowersMain(data) {
     flower.appendChild(descd);
     flower.appendChild(document.createElement("br"))
     flower.appendChild(priced);
-    flower.appendChild(qnt);
-    flower.appendChild(add);
+    if(localStorage.getItem('token')!=='') {
+        flower.appendChild(qnt);
+        flower.appendChild(add);
+    }
     flowerDiv.appendChild(flower);
 
 
@@ -262,6 +318,7 @@ function login2(auth) {
     if(auth===undefined){
         document.getElementById("Log_res").className = "error"
         document.getElementById("Log_res").innerHTML = "Incorrect email or password!"
+        document.getElementById("lpass").value="";
         return
     }
     console.log(auth)
@@ -278,11 +335,19 @@ function login2(auth) {
 
 }
 function login3(user){
-    document.getElementById("Log_res").className = "success"
-    document.getElementById("Log_res").innerHTML = "Logged in"
-    document.getElementById('auth').style.display = 'none'
-    document.getElementById('Greeting').innerHTML="Hello "+user.name + ' '+ user.surname+'!'
+    if(localStorage.getItem('lang')==='en') {
+        document.getElementById("Log_res").className = "success"
+        document.getElementById("Log_res").innerHTML = "Logged in"
+        document.getElementById('auth').style.display = 'none'
+        document.getElementById('Greeting').innerHTML = "Hello " + user.name + ' ' + user.surname + '!'
+    }else{
+        document.getElementById("Log_res").className = "Sukces"
+        document.getElementById("Log_res").innerHTML = "Zalogowano"
+        document.getElementById('auth').style.display = 'none'
+        document.getElementById('Greeting').innerHTML = "Witaj " + user.name + ' ' + user.surname + '!'
+    }
     document.getElementById('auth2').style.display = 'block'
+    FlowersMain();
     setTimeout(show, 3000, 'flowerbed')
 }
 
@@ -290,6 +355,7 @@ function logout() {
     localStorage.setItem('token', '')
     document.getElementById('auth').style.display = 'block'
     document.getElementById('auth2').style.display = 'none'
+    FlowersMain();
     setTimeout(show, 3000, 'flowerbed')
 }
 
@@ -303,51 +369,40 @@ function show_menu() {
 function get_cart() {
     const cartDiv = document.getElementById("cart");
     cartDiv.innerHTML = ""
-    if (localStorage.getItem('token') !== '') {
-        fetch('http://localhost:8080/cart', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('token'),
-                'Accept-Language': localStorage.getItem('lang')
+    fetch('http://localhost:8080/cart', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Accept-Language': localStorage.getItem('lang')
+        }
+    })
+        .then(res => {
+            return res.json()
+        })
+        .then(data => {
+            if (data.length > 0) {
+                for (let i = 0; i < data.length; i++) {
+                    displaycart(data[i])
+                }
+                const clear = document.createElement("button")
+                clear.innerHTML = "Clear Cart"
+                clear.onclick = function (){clear_cart()}
+                cartDiv.appendChild(clear);
+                cartDiv.appendChild(document.createElement("br"))
+                const exit = document.createElement("button")
+                exit.textContent = "Back"
+                exit.onclick=function () {show('flowerbed')}
+                cartDiv.appendChild(exit);
+            } else {
+                cartDiv.innerHTML = "Cart is empty";
+                cartDiv.appendChild(document.createElement("br"))
+                const exit = document.createElement("button")
+                exit.textContent = "Back"
+                exit.onclick=function () {show('flowerbed')}
+                cartDiv.appendChild(exit);
             }
         })
-            .then(res => {
-                return res.json()
-            })
-            //.then(data => function (){if(data)})
-            .then(data => {
-                if (data.length > 0) {
-                    for (let i = 0; i < data.length; i++) {
-                        displaycart(data[i])
-                    }
-                    const clear = document.createElement("button")
-                    clear.innerHTML = "Clear Cart"
-                    clear.onclick = function (){clear_cart()}
-                    cartDiv.appendChild(clear);
-                    cartDiv.appendChild(document.createElement("br"))
-                    const exit = document.createElement("button")
-                    exit.textContent = "Back"
-                    exit.onclick=function () {show('flowerbed')}
-                    cartDiv.appendChild(exit);
-                } else {
-                    cartDiv.innerHTML = "Cart is empty";
-                    cartDiv.appendChild(document.createElement("br"))
-                    const exit = document.createElement("button")
-                    exit.textContent = "Back"
-                    exit.onclick=function () {show('flowerbed')}
-                    cartDiv.appendChild(exit);
-                }
-            })
-    }
-    else{
-        document.getElementById("cart").innerHTML = "Not Logged In";
-        document.getElementById("cart").appendChild(document.createElement("br"))
-        const exit = document.createElement("button")
-        exit.textContent = "Back"
-        exit.onclick=function () {show('flowerbed')}
-        cartDiv.appendChild(exit);
-    }
 }
 
 

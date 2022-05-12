@@ -15,15 +15,17 @@
     <option value="nameEn">Name</option>
     <option value="categories">Category</option>
   </select>
-  <button id="l" onclick=swap_lang();FlowersMain() class="language">en</button>
+  <button id="l" onclick=swap_lang();FlowersMain()>en</button>
   <div id="auth" style="">
-    <button id="r" onclick="show('register')" class="register">Sign Up</button>
-    <button id="log" onclick="show('login')" class="login">Sign in</button>
+    <button id="r" onclick="show('register')" >Sign Up</button>
+    <button id="log" onclick="show('login')" >Sign in</button>
+
   </div>
   <div id="auth2" style="display: none">
-    <p class="logout" id="Greeting"></p><p class="link2" onclick="logout()"> log out</p>
+    <button id="cartb" onclick="show('cart');get_cart()" class="cart">Cart</button>
+    <button id="out" onclick="logout()">Sign out</button>
+    <p id="Greeting"></p>
   </div>
-  <button id="cartb" onclick="show('cart');get_cart()" class="cart">Cart</button>
   <h1>Kwiatowe Imperium</h1>
 </header>
 <body class="theme" id="1" onload="FlowersMain();">
@@ -38,8 +40,8 @@
   <div>
     <button id="b1" onclick=get()>Get Flower</button>
   </div>
-  <div id="flower"></div>
   <p class="link" onclick="show('flowerbed')">Back</p>
+  <div id="flower"></div>
 </div>
 <div id="AddF" class="page" style="display:none">
   <p>Enter flower name</p><br>
