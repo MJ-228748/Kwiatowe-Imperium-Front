@@ -148,7 +148,10 @@ function put() {
 
     }
     else{
-
+        var namepl = document.getElementById("flower_name").value;
+        var descpl = document.getElementById("flower_desc").value;
+        var nameen = undefined
+        var descen = undefined
     }
     var price = document.getElementById("flower_price").value;
     fetch('http://localhost:8080/api/product', {
