@@ -1,16 +1,4 @@
-.link2 {
-    text-decoration: underline;
-    color: blue;
-    cursor: pointer;
-    height: 30px;
-    width: 75px;
-}
 
-.link {
-    text-decoration: underline;
-    color: blue;
-    cursor: pointer;
-}
 .error {
     text-decoration: wavy;
     color: red;
@@ -39,6 +27,7 @@ body {
     padding-top: 50px;
     padding-bottom: 50px;
     /*background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2Fwp5224588.jpg&f=1&nofb=1");*/
+    background-image: url("https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pixelstalk.net%2Fwp-content%2Fuploads%2F2016%2F06%2FFlower-wallpaper-hd-1920x1200.jpg&f=1&nofb=1");
 }
 
 .theme {
@@ -165,4 +154,10 @@ html {
     position: absolute;
     top:90%;
     left: 45%;
+}
+
+.option{
+    width: 80%;
+    height: 20%;
+    margin: 10% 10% 10% 10%;
 }

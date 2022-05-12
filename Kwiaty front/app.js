@@ -32,10 +32,96 @@ function swap_lang() {
     if (localStorage.getItem('lang') === "en") {
         localStorage.setItem('lang', 'PL')
         document.getElementById("l").textContent = "pl"
+        document.getElementById("r").textContent ="Zarejestruj"
+        document.getElementById("log").textContent ="Zaloguj"
+        document.getElementById("menu1").textContent ="Znajdz przez ID"
+        document.getElementById("menu2").textContent ="Dodaj nowy kwiat"
+        document.getElementById("FindID1").innerHTML ="Podaj ID kwiatu"
+        document.getElementById("b1").textContent ="Wyszukaj"
+        document.getElementById("FindID2").textContent ="Powrot"
+        document.getElementById("AddF1").innerHTML ="Podaj Nazwe Kwiatu"
+        document.getElementById("AddF2").innerHTML ="Podaj opis Kwiatu"
+        document.getElementById("AddF3").innerHTML ="Podaj cene kwiatu"
+        document.getElementById("b2").textContent ="Dodaj"
+        document.getElementById("AddF4").textContent ="Powrot"
+        document.getElementById("register1").innerHTML ="Imie"
+        document.getElementById("register2").innerHTML ="Nazwisko"
+        document.getElementById("register3").innerHTML ="Email"
+        document.getElementById("register4").innerHTML ="Haslo"
+        document.getElementById("register5").innerHTML ="Potwierdz haslo"
+        document.getElementById("reg").textContent ="Zarejestruj"
+        document.getElementById("register6").textContent ="Powrot"
+        document.getElementById("login1").innerHTML ="Email"
+        document.getElementById("login2").innerHTML ="Haslo"
+        document.getElementById("log2").textContent ="Zaloguj"
+        document.getElementById("login3").textContent ="Powrot"
+        document.getElementById("cartb").textContent ="Koszyk"
+        document.getElementById("out").textContent ="Wyloguj"
+        document.getElementById("sorting").innerHTML=""
+        var option1=document.createElement("option")
+        option1.value="id"
+        option1.text="Domyslny"
+        var option2=document.createElement("option")
+        option2.value="price"
+        option2.text="Cena"
+        var option3=document.createElement("option")
+        option3.value="namePl"
+        option3.text="Nazwa"
+        var option4=document.createElement("option")
+        option4.value="categories"
+        option4.text="Kategoria"
+        document.getElementById("sorting").appendChild(option1)
+        document.getElementById("sorting").appendChild(option2)
+        document.getElementById("sorting").appendChild(option3)
+        document.getElementById("sorting").appendChild(option4)
+
     } else {
         localStorage.setItem('lang', 'en')
         document.getElementById("l").textContent = "en"
+        document.getElementById("r").textContent ="Sign up"
+        document.getElementById("log").textContent ="Sign in"
+        document.getElementById("menu1").textContent ="Find Flower by ID"
+        document.getElementById("menu2").textContent ="Add new flower"
+        document.getElementById("FindID1").innerHTML ="Enter flower id"
+        document.getElementById("b1").textContent ="Get Flower"
+        document.getElementById("FindID2").textContent ="Back"
+        document.getElementById("AddF1").innerHTML ="Enter flower name"
+        document.getElementById("AddF2").innerHTML ="Enter flower description"
+        document.getElementById("AddF3").innerHTML ="Enter flower price"
+        document.getElementById("b2").textContent ="Put Flower"
+        document.getElementById("AddF4").textContent ="Back"
+        document.getElementById("register1").innerHTML ="Name"
+        document.getElementById("register2").innerHTML ="Surname"
+        document.getElementById("register3").innerHTML ="Email"
+        document.getElementById("register4").innerHTML ="Password"
+        document.getElementById("register5").innerHTML ="Confirm Password"
+        document.getElementById("reg").textContent ="Register"
+        document.getElementById("register6").textContent ="Back"
+        document.getElementById("login1").innerHTML ="Email"
+        document.getElementById("login2").innerHTML ="Password"
+        document.getElementById("log2").textContent ="Login"
+        document.getElementById("login3").textContent ="Back"
+        document.getElementById("cartb").textContent ="Cart"
+        document.getElementById("out").textContent ="Sign out"
+        document.getElementById("sorting").innerHTML=""
+        var option1=document.createElement("option")
+        option1.value="id"
+        option1.text="Default order"
+        var option2=document.createElement("option")
+        option2.value="price"
+        option2.text="Price"
+        var option3=document.createElement("option")
+        option3.value="nameEn"
+        option3.text="Name"
+        var option4=document.createElement("option")
+        option4.value="categories"
+        option4.text="Category"
+        document.getElementById("sorting").appendChild(option1)
+        document.getElementById("sorting").appendChild(option2)
+        document.getElementById("sorting").appendChild(option3)
+        document.getElementById("sorting").appendChild(option4)
     }
+    if(localStorage.getItem('token')!=='') get_cart()
 }
 
 function get() {
@@ -54,8 +140,16 @@ function get() {
 }
 
 function put() {
-    var name = document.getElementById("flower_name").value;
-    var desc = document.getElementById("flower_desc").value;
+    if(localStorage.getItem('lang')==='en') {
+        var nameen = document.getElementById("flower_name").value;
+        var descen = document.getElementById("flower_desc").value;
+        var namepl = undefined
+        var descpl = undefined
+
+    }
+    else{
+
+    }
     var price = document.getElementById("flower_price").value;
     fetch('http://localhost:8080/api/product', {
             method: 'POST',
@@ -67,13 +161,13 @@ function put() {
                 categories: [
                     0
                 ],
-                descriptionEn: desc,
-                descriptionPl: desc,
+                descriptionEn: descen,
+                descriptionPl: descpl,
                 images: [
                     0
                 ],
-                nameEn: name,
-                namePl: name,
+                nameEn: descen,
+                namePl: descpl,
                 price: price
             })
         })
@@ -143,7 +237,8 @@ function displayFlower(data) {
     qnt.defaultValue=0
     qnt.style="width: 50px"
 
-    add.innerHTML="Add to cart"
+    if (localStorage.getItem('lang') === "en")add.innerHTML="Add to cart"
+    else add.innerHTML="Dodaj"
     add.onclick=function(){add_to_cart(data.id)}
 
 
@@ -175,7 +270,8 @@ function add_page_button(id) {
         const page = document.createElement("button");
         page.id = "page_" + i
         page.className = "Page_button"
-        page.innerHTML = "Page " + (i + 1)
+        if (localStorage.getItem('lang') === "en") page.innerHTML = "Page " + (i + 1)
+        else page.innerHTML = "Strona " + (i + 1)
         page.addEventListener('click', function () {
             swap_page(i)
         })
@@ -246,7 +342,8 @@ function displayFlowersMain(data) {
     qnt.defaultValue=0
     qnt.style="width: 50px"
 
-    add.innerHTML="Add to cart"
+    if (localStorage.getItem('lang') === "en")add.innerHTML="Add to cart"
+    else add.innerHTML="Dodaj"
     add.onclick=function(){add_to_cart(data.id)}
 
 
@@ -292,8 +389,8 @@ function register() {
         .then(res => { return res.json() })
         .then(data => console.log(data))
     document.getElementById("Reg_res").className = "success"
-    document.getElementById("Reg_res").innerHTML = "Registered"
-    setTimeout(show, 3000, 'flowerbed')
+    if(localStorage.getItem('lang')==='en') {document.getElementById("Reg_res").innerHTML = "Registered"}
+    else {document.getElementById("Reg_res").innerHTML = "Zarejestrowano"}
 }
 
 function login1() {
@@ -341,14 +438,13 @@ function login3(user){
         document.getElementById('auth').style.display = 'none'
         document.getElementById('Greeting').innerHTML = "Hello " + user.name + ' ' + user.surname + '!'
     }else{
-        document.getElementById("Log_res").className = "Sukces"
+        document.getElementById("Log_res").className = "success"
         document.getElementById("Log_res").innerHTML = "Zalogowano"
         document.getElementById('auth').style.display = 'none'
         document.getElementById('Greeting').innerHTML = "Witaj " + user.name + ' ' + user.surname + '!'
     }
     document.getElementById('auth2').style.display = 'block'
     FlowersMain();
-    setTimeout(show, 3000, 'flowerbed')
 }
 
 function logout() {
@@ -356,7 +452,6 @@ function logout() {
     document.getElementById('auth').style.display = 'block'
     document.getElementById('auth2').style.display = 'none'
     FlowersMain();
-    setTimeout(show, 3000, 'flowerbed')
 }
 
 function show_menu() {
@@ -386,19 +481,24 @@ function get_cart() {
                     displaycart(data[i])
                 }
                 const clear = document.createElement("button")
-                clear.innerHTML = "Clear Cart"
+
+                if(localStorage.getItem('lang')==='en') {clear.innerHTML = "Clear Cart"}
+                else {clear.innerHTML = "Wyczysc koszyk"}
                 clear.onclick = function (){clear_cart()}
                 cartDiv.appendChild(clear);
                 cartDiv.appendChild(document.createElement("br"))
                 const exit = document.createElement("button")
-                exit.textContent = "Back"
+                if(localStorage.getItem('lang')==='en') {exit.textContent = "Back"}
+                else exit.textContent = "Wstecz";
                 exit.onclick=function () {show('flowerbed')}
                 cartDiv.appendChild(exit);
             } else {
-                cartDiv.innerHTML = "Cart is empty";
+                if(localStorage.getItem('lang')==='en') {cartDiv.innerHTML = "Cart is empty";}
+                else {cartDiv.innerHTML = "Koszyk jest pusty";}
                 cartDiv.appendChild(document.createElement("br"))
                 const exit = document.createElement("button")
-                exit.textContent = "Back"
+                if(localStorage.getItem('lang')==='en') {exit.textContent = "Back";}
+                else exit.textContent = "Wstecz";
                 exit.onclick=function () {show('flowerbed')}
                 cartDiv.appendChild(exit);
             }
@@ -458,7 +558,8 @@ function displaycart(data){
 
     descd.innerHTML = desc;
 
-    del.innerHTML="Remove from cart"
+    if(localStorage.getItem('lang')==='en') {del.innerHTML="Remove from cart"}
+    else {del.innerHTML="Usun z koszyka"}
     del.onclick=function(){remove_from_cart(data.product.id);get_cart()}
 
     if (localStorage.getItem('lang') === "en") priced.innerHTML=rc +"( "+data.quantity*rc+") " +" PLN";

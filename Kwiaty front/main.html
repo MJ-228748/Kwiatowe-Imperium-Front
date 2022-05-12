@@ -17,7 +17,7 @@
   </select>
   <button id="l" onclick=swap_lang();FlowersMain()>en</button>
   <div id="auth" style="">
-    <button id="r" onclick="show('register')" >Sign Up</button>
+    <button id="r" onclick="show('register')" >Sign up</button>
     <button id="log" onclick="show('login')" >Sign in</button>
 
   </div>
@@ -31,54 +31,54 @@
 <body class="theme" id="1" onload="FlowersMain();">
 
 <div id="main" class="menu" style="display: none">
-  <p class="link" onclick="show('FindID')">Find Flower by ID</p><br>
-  <p class="link" onclick="show('AddF')">Add new flower</p><br>
+  <button id="menu1" class="option" onclick="show('FindID')">Find Flower by ID</button><br>
+  <button id="menu2" class="option" onclick="show('AddF')">Add new flower</button><br>
 </div>
 <div id="FindID" class="page" style="display:none">
-  <h2>Enter flower id</h2>
+  <h2 id="FindID1">Enter flower id</h2>
   <input type="number" name="id" id="flower_id">
   <div>
     <button id="b1" onclick=get()>Get Flower</button>
   </div>
-  <p class="link" onclick="show('flowerbed')">Back</p>
+  <button id="FindID2" onclick="show('flowerbed')">Back</button>
   <div id="flower"></div>
 </div>
 <div id="AddF" class="page" style="display:none">
-  <p>Enter flower name</p><br>
+  <p id="AddF1">Enter flower name</p><br>
   <input type="text" name="name" id="flower_name"><br>
-  <p>Enter flower description</p><br>
+  <p id="AddF2">Enter flower description</p><br>
   <input type="text" name="desc" id="flower_desc"><br>
-  <p>Enter flower price</p><br>
+  <p id="AddF3">Enter flower price</p><br>
   <input type="number" name="price" id="flower_price"><br>
   <div>
     <button id="b2" onclick=put()>Put Flower</button>
   </div>
   <div id="flower2"></div>
-  <p class="link" onclick="show('flowerbed')">Back</p>
+  <button id="AddF4" onclick="show('flowerbed')">Back</button>
 </div>
 <div id="register" class="page" style="display:none">
-  <p>Name</p><br>
+  <p id="register1">Name</p><br>
   <input type="text" id="name"><br>
-  <p>Surname</p><br>
+  <p id="register2">Surname</p><br>
   <input type="text" id="surname"><br>
-  <p>Email</p><br>
+  <p id="register3">Email</p><br>
   <input type="text" id="email"><br>
-  <p>Password</p><br>
+  <p id="register4">Password</p><br>
   <input type="password" id="pass"><br>
-  <p>Confirm Password</p><br>
+  <p id="register5">Confirm Password</p><br>
   <input type="password" id="pass2"><br>
   <div id="Reg_res"></div><br>
-  <button id="reg" onclick=register()>register</button><br>
-  <p class="link" onclick="show('flowerbed')">Back</p>
+  <button id="reg" onclick=register()>Register</button><br>
+  <button id="register6" onclick="show('flowerbed')">Back</button>
 </div>
 <div id="login" class="page" style="display:none">
-  <p>Email</p><br>
+  <p id="login1">Email</p><br>
   <input type="text" id="lemail"><br>
-  <p>Password</p><br>
+  <p id="login2">Password</p><br>
   <input type="password" id="lpass">
   <div id="Log_res"></div><br>
-  <button id="log2" onclick=login1()>login</button><br>
-  <p class="link" onclick="show('flowerbed')">Back</p>
+  <button id="log2" onclick=login1()>Login</button><br>
+  <button id="login3" onclick="show('flowerbed')">Back</button>
 </div>
 <div id="flowerbed" class="page"></div>
 <div id="cart" class="page"></div>
