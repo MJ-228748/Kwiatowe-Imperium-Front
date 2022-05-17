@@ -36,6 +36,7 @@ function swap_lang() {
         document.getElementById("log").textContent ="Zaloguj"
         document.getElementById("menu1").textContent ="Znajdz przez ID"
         document.getElementById("menu2").textContent ="Dodaj nowy kwiat"
+        document.getElementById("menu3").textContent ="Zatwierdz zamowienia"
         document.getElementById("FindID1").innerHTML ="Podaj ID kwiatu"
         document.getElementById("b1").textContent ="Wyszukaj"
         document.getElementById("FindID2").textContent ="Powrot"
@@ -82,6 +83,7 @@ function swap_lang() {
         document.getElementById("log").textContent ="Sign in"
         document.getElementById("menu1").textContent ="Find Flower by ID"
         document.getElementById("menu2").textContent ="Add new flower"
+        document.getElementById("menu3").textContent ="Finalize User Carts"
         document.getElementById("FindID1").innerHTML ="Enter flower id"
         document.getElementById("b1").textContent ="Get Flower"
         document.getElementById("FindID2").textContent ="Back"
@@ -122,6 +124,7 @@ function swap_lang() {
         document.getElementById("sorting").appendChild(option4)
     }
     if(localStorage.getItem('token')!=='') get_cart()
+    get_carts()
 }
 
 function get() {
@@ -421,7 +424,6 @@ function login2(auth) {
         document.getElementById("lpass").value="";
         return
     }
-    console.log(auth)
     localStorage.setItem('token',auth)
     fetch('http://localhost:8080/auth/me', {
         method: 'GET',
@@ -435,6 +437,8 @@ function login2(auth) {
 
 }
 function login3(user){
+    console.log()
+    if(user.roles[0].id===1) {document.getElementById('menu3').style.display='block'}
     if(localStorage.getItem('lang')==='en') {
         document.getElementById("Log_res").className = "success"
         document.getElementById("Log_res").innerHTML = "Logged in"
@@ -454,6 +458,7 @@ function logout() {
     localStorage.setItem('token', '')
     document.getElementById('auth').style.display = 'block'
     document.getElementById('auth2').style.display = 'none'
+    document.getElementById('menu3').style.display='none'
     FlowersMain();
 }
 
@@ -483,11 +488,16 @@ function get_cart() {
                 for (let i = 0; i < data.length; i++) {
                     displaycart(data[i])
                 }
+                const buy = document.createElement("button")
                 const clear = document.createElement("button")
-
+                if(localStorage.getItem('lang')==='en') {buy.innerHTML = "Buy"}
+                else {buy.innerHTML = "Kup"}
                 if(localStorage.getItem('lang')==='en') {clear.innerHTML = "Clear Cart"}
                 else {clear.innerHTML = "Wyczysc koszyk"}
+                buy.onclick = function (){buy_cart()}
                 clear.onclick = function (){clear_cart()}
+                cartDiv.appendChild(buy);
+                cartDiv.appendChild(document.createElement("br"))
                 cartDiv.appendChild(clear);
                 cartDiv.appendChild(document.createElement("br"))
                 const exit = document.createElement("button")
@@ -579,6 +589,7 @@ function displaycart(data){
     cartdiv.appendChild(flower);
 }
 
+
 function remove_from_cart(id){
     fetch('http://localhost:8080/cart/'+id, {
         method: 'DELETE',
@@ -601,4 +612,129 @@ function clear_cart(){
     })
         .then(res => { return res.text() })
         .then(()=>get_cart())
+}
+
+function buy_cart(){
+    fetch('http://localhost:8080/cart/buy', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+localStorage.getItem('token'),
+        },
+    })
+        .then(res => { return res.text() })
+        .then(data => console.log(data))
+        .then(()=>clear_cart())
+}
+
+function get_carts() {
+    const cartDiv = document.getElementById("Carts");
+    cartDiv.innerHTML = ""
+    fetch('http://localhost:8080/api/cart', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then(res => {return res.json()})
+        .then(data => display_carts(data))
+
+}
+
+function display_carts(data){
+    console.log(data)
+    const cartDiv = document.getElementById("Carts");
+    cartDiv.innerHTML=""
+    for(let i=0;i<data.length;i++){
+        const page = document.createElement("button");
+        page.id = "Cart " + i
+        page.className = "Page_button"
+        if (localStorage.getItem('lang') === "en") page.innerHTML = "Cart " + (i + 1)
+        else page.innerHTML = "Koszyk " + (i + 1)
+        page.addEventListener('click', function () {
+            displaycarts((data[i]).products,(data[i]).id)
+        })
+        cartDiv.appendChild(page);
+    }
+    const exit = document.createElement("button")
+    if(localStorage.getItem('lang')==='en') {exit.textContent = "Back";}
+    else exit.textContent = "Wstecz";
+    exit.onclick=function () {show('flowerbed')}
+    cartDiv.appendChild(exit)
+}
+
+function displaycarts(data,id){
+    let name, desc, rc, imag;
+    console.log(data)
+    const cartdiv = document.getElementById("final");
+    cartdiv.innerHTML=""
+    for(let i=0;i<data.length;i++) {
+
+        const flower = document.createElement("div");
+        flower.className = "flowerbed"
+        flower.id = data[i].product.id
+        flower.onmouseover = function () {
+            this.style.opacity = "100%"
+        }
+        flower.onmouseout = function () {
+            this.style.opacity = "45%"
+        }
+        if (data[i].product.images.length === 0) imag = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F002%2F261%2F129%2Foriginal%2Fno-sign-empty-red-crossed-out-circle-not-allowed-sign-isolate-on-white-background-illustration-eps-10-free-vector.jpg&f=1&nofb=1"
+        else imag = data[i].product.images[0].url
+        const imagd = document.createElement("img");
+        const named = document.createElement("h3");
+        const descd = document.createElement("p");
+        const priced = document.createElement("p");
+
+        if (localStorage.getItem('lang') === "en"){
+            name=data[i].product.nameEn
+            desc=data[i].product.descriptionEn
+        }
+        else{
+            name=data[i].product.namePl
+            desc=data[i].product.descriptionPl
+        }
+        rc=data[i].product.price
+
+
+        imagd.src = imag;
+        imagd.className = "FlowerImg"
+
+        named.innerHTML = data[i].quantity + "x" + name;
+
+        descd.innerHTML = desc;
+
+
+        if (localStorage.getItem('lang') === "en") priced.innerHTML = rc + "( " + data[i].quantity * rc + ") " + " PLN";
+        else priced.innerHTML = rc + "( " + data[i].quantity * rc + ") " + " ZL";
+
+
+        flower.appendChild(named);
+        flower.appendChild(imagd);
+        flower.appendChild(descd);
+        flower.appendChild(document.createElement("br"))
+        flower.appendChild(priced);
+        cartdiv.appendChild(flower);
+    }
+    const finalize=document.createElement('button');
+    if(localStorage.getItem('lang')==='en') {finalize.textContent = "Confirm Cart"}
+    else finalize.textContent = "Zatwierdz koszyk";
+    finalize.onclick=function () {finalize_cart(id)}
+    const exit = document.createElement("button")
+    if(localStorage.getItem('lang')==='en') {exit.textContent = "Back"}
+    else exit.textContent = "Wstecz";
+    exit.onclick=function () {show('Carts')}
+    cartdiv.appendChild(finalize);
+    cartdiv.appendChild(exit);
+    show('final')
+}
+
+function finalize_cart(id){
+    fetch('http://localhost:8080/api/cart/'+id, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(()=>get_carts())
+        .then(()=>show('Carts'))
 }

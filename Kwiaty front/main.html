@@ -33,6 +33,7 @@
 <div id="main" class="menu" style="display: none">
   <button id="menu1" class="option" onclick="show('FindID')">Find Flower by ID</button><br>
   <button id="menu2" class="option" onclick="show('AddF')">Add new flower</button><br>
+  <button style="display:none" id="menu3" class="option" onclick="show('Carts');get_carts()">Finalize User Carts</button><br>
 </div>
 <div id="FindID" class="page" style="display:none">
   <h2 id="FindID1">Enter flower id</h2>
@@ -82,6 +83,8 @@
 </div>
 <div id="flowerbed" class="page"></div>
 <div id="cart" class="page"></div>
+<div id="Carts" class="page"></div>
+<div id="final" class="page"></div>
 <script src="app.js"> </script>
 <noscript>You need to enable JavaScript to view the full site.</noscript>
 </body>
